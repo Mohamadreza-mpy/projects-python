@@ -1,0 +1,89 @@
+import sqlite3
+
+
+def connect():
+    conn = sqlite3.connect("movies.db")
+    cur = conn.cursor()
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS movie (id INTEGER PRIMARY KEY, name text,score INTEGER , janer text , yare INTEGER )")
+    conn.commit()
+    conn.close()
+
+
+def insert(name, score, janer, yare):
+    conn = sqlite3.connect("movies.db")
+    cur = conn.cursor()
+    cur.execute("INSERT INTO movie VALUES (NULL,?,?,?,?)", (name, score, janer, yare ))
+    conn.commit()
+    conn.close()
+
+def love ():
+    conn = sqlite3.connect("loves.db")
+    cur = conn.cursor()
+    cur.execute("CREATE TABLE IF NOT EXISTS  love  (id INTEGER PRIMARY KEY, name text,score INTEGER , janer text , yare INTEGER )")
+    conn.commit()
+    conn.close()
+
+def inlove (name, score, janer, yare):
+    conn = sqlite3.connect("loves.db")
+    cur = conn.cursor()
+    cur.execute("INSERT INTO love VALUES (NULL,?,?,?,?)", (name, score, janer, yare ))
+    conn.commit()
+    conn.close()
+
+def view_love():
+    conn = sqlite3.connect("loves.db")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM love")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def view():
+    conn = sqlite3.connect("movies.db")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM movie")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def search(name="", score="", janer="", yare=""):
+    conn = sqlite3.connect("movies.db")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM movie WHERE name=? OR score=? OR janer=? OR yare=?", (name, score, janer, yare))
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def delete(id):
+    conn = sqlite3.connect("movies.db")
+    cur = conn.cursor()
+    cur.execute("DELETE FROM movie WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+def delete_loves(id):
+    conn = sqlite3.connect("loves.db")
+    cur = conn.cursor()
+    cur.execute("DELETE FROM love WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+
+
+
+
+def update(id, name, score, janer, yare):
+    conn = sqlite3.connect("movies.db")
+    cur = conn.cursor()
+    cur.execute("UPDATE movie SET name=?,score=?,janer=?,yare=? WHERE id=?", (name, score, janer, yare, id))
+    conn.commit()
+    conn.close()
+
+
+connect()
+love()
+#inlove("lok3", 10, "dram", 2014)
+#print(view_love())
